@@ -44,7 +44,7 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .blue
         configureViews()
         configureConstraints()
         createObservers()
@@ -54,8 +54,9 @@ class WeatherViewController: UIViewController {
         locationService.getLocation { [weak self] cityName, location in
             self?.weatherService.getCurrentWeatherWithCityAndCoords(cityName: cityName, coords: location.coordinate) { [weak self] temperature in
                 DispatchQueue.main.async {
-                    self?.cityLabel.text = cityName
-                    self?.temperatureLabel.text = String(temperature) + "º"
+                    guard let self = self else { return }
+                    self.cityLabel.fadeInLabel(newText: cityName)
+                    self.temperatureLabel.fadeInLabel(newText: String(format: "%.1f", temperature) + "º")
                 }
             }
         }
@@ -89,4 +90,12 @@ class WeatherViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
 
+}
+
+extension UILabel {
+    
+    func fadeInLabel(newText: String) {
+        UIView.transition(with: self, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                            self.text = newText}, completion: nil)
+    }
 }
