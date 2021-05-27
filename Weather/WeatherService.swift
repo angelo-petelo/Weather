@@ -18,7 +18,7 @@ class WeatherService {
     private let baseUrl = "https://community-open-weather-map.p.rapidapi.com"
         
     public func getCurrentWeatherWithCityAndCoords(cityName: String, coords: CLLocationCoordinate2D, completion: @escaping (Double) -> Void) {
-        let urlString = baseUrl + "/weather?units=imperial&q=\(cityName)&lat=\(coords.latitude)&lon=\(coords.longitude)"
+        let urlString = baseUrl + "/weather?units=imperial&q=\(cityName.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")&lat=\(coords.latitude)&lon=\(coords.longitude)"
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.allHTTPHeaderFields = headers
