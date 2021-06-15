@@ -11,7 +11,7 @@ import CoreLocation
 class WeatherService {
     
     private let headers = [
-        "x-rapidapi-key": "ec63cd2e45msh299c5f9975e731cp104512jsnc7481dcfb607",
+        "x-rapidapi-key": "API KEY HERE",
         "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com"
     ]
     
